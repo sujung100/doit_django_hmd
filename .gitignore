@@ -130,3 +130,6 @@ dmypy.json
 
 # add mine
 doit_venv/
+
+# Pycharm
+migrations/
