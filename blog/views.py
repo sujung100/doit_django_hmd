@@ -24,13 +24,13 @@ class PostList(ListView):
     # 파일명을 위에있는 규칙으로 하지않을경우 명시해줘야함
     # template_name = 'blog/post_list.html'
 
-def single_post_page(request, pk):
-    post = Post.objects.get(pk=pk)
+# def single_post_page(request, pk):
+#     post = Post.objects.get(pk=pk)
 
-    return render(
-        request,
-        'blog/single_post_page.html',
-        {
-          'post': post,
-        }
-    )
+#     return render(
+#         request,
+#         'blog/single_post_page.html',
+#         {
+#           'post': post,
+#         }
+#     )
