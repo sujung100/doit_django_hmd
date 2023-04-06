@@ -133,3 +133,4 @@ doit_venv/
 
 # Pycharm
 migrations/
+_media/
