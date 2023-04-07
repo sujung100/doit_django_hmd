@@ -10,9 +10,10 @@ urlpatterns = [
     # /blog/1/
     path('<int:pk>/', views.PostDetail.as_view(), name='post_detail'),
 
-
-    path('category/<str:slug>/', views.category_page, name='category_filter'),
     # /blog/category/{self.slug}/
     # /blog/category/파이썬
+    path('category/<str:slug>/', views.category_page, name='category_filter'),
+
+    path('tag/<str:slug>/', views.tag_page, name='tag_filter'),
 
 ]
