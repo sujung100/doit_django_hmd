@@ -14,8 +14,17 @@ from .models import Post, Category
 #         }
 #     )
 
-class PostDetail(DetailView):
+class PostDetail(DetailView): 
     model = Post
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDetail, self).get_context_data()
+        context['categories'] = Category.objects.all()
+        # Post 테이블에서  category 필드를 선택안한 포스트의 갯수
+        context['no_category_post_count'] = Post.objects.filter(category=None).count()
+        return context
+
+
 
 class PostList(ListView):
     model = Post
@@ -25,7 +34,7 @@ class PostList(ListView):
         context = super(PostList, self).get_context_data()
         context['categories'] = Category.objects.all()
         # Post 테이블에서  category 필드를 선택안한 포스트의 갯수
-        context['no_category_post_count'] = Post.objects.filter(category=None).count
+        context['no_category_post_count'] = Post.objects.filter(category=None).count()
         return context
 
     # post_list.html : class이름_list.html내부적으로 정의가 되어있기 때문에 생략가능
