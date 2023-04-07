@@ -53,48 +53,44 @@ class PostList(ListView):
 #     )
 
 # 방법1
-def category_page(request, slug):
-    # 비어있는 딕셔너리 변수 선언
-    context = {}
-    # 선택한 슬러그에 해당하는 Category테이블의 레코드를 가져옴
-    category = Category.objects.get(slug=slug)
-    # post 테이블에서 선택한 category의 레코드만 필터링
-    context['post_list'] = Post.objects.filter(category=category)
-    # Category 테이블의 목록 모두 가져옴
-    context['categories'] = Category.objects.all()
-    # Post 테이블에서  category 필드를 선택안한 포스트의 갯수
-    context['no_category_post_count'] = Post.objects.filter(category=None).count()
-    # 선택한 카테고리의 레코드
-    context['category'] = category
-    # print(context)
-
-    # if slug == 'no_category':
-    #     category = '미분류'
-    #     post_list = Post.objects.filter(category=None)
-    # else:
-    #     category = Category.objects.get(slug=slug)
-    #     post_list = Post.objects.filter(category=category)
-
-    return render(
-        request,
-        'blog/post_list.html',
-        context
-    )
-
-
-# 방법2
 # def category_page(request, slug):
+#     # 비어있는 딕셔너리 변수 선언
+#     context = {}
+#     # 선택한 슬러그에 해당하는 Category테이블의 레코드를 가져옴
 #     category = Category.objects.get(slug=slug)
+#     # post 테이블에서 선택한 category의 레코드만 필터링
+#     context['post_list'] = Post.objects.filter(category=category)
+#     # Category 테이블의 목록 모두 가져옴
+#     context['categories'] = Category.objects.all()
+#     # Post 테이블에서  category 필드를 선택안한 포스트의 갯수
+#     context['no_category_post_count'] = Post.objects.filter(category=None).count()
+#     # 선택한 카테고리의 레코드
+#     context['category'] = category
+#     # print(context)
 
-#     context = {
-#     'post_list': Post.objects.filter(category=category),
-#     'categories' : Category.objects.all(),
-#     'no_category_post_count' : Post.objects.filter(category=None).count(),
-#     'category' : category,
-#     }
-#     print(context)
 #     return render(
 #         request,
 #         'blog/post_list.html',
 #         context
 #     )
+
+
+# 방법2
+def category_page(request, slug):
+    if slug == 'no_category':
+        category = '미분류'
+        post_list = Post.objects.filter(category=None)
+    else:
+        # 선택한 슬러그의 해당하는 Category테이블의 레코드
+        category = Category.objects.get(slug=slug)
+        post_list = Post.objects.filter(category=category)
+        # Post 테이블에서 선택한 category의 레코드만 필터링
+
+    context = {
+        'post_list': post_list,
+        'categories': Category.objects.all(),
+        'no_category_post_cnt': Post.objects.filter(category=None).count(),
+        'category': category
+    }
+    # print(context)
+    return render(request,'blog/post_list.html', context)
