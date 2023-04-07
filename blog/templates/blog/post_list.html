@@ -7,6 +7,9 @@
 <div class="col-lg-8" id="main-area">
     <h1 class="my-4">
         Blog
+        {% if category %}
+        <span class="badge badge-secondary">{{ category }}</span>
+        {% endif %}
     </h1>
     {% if post_list.exists %}
         <!-- Blog post-->
