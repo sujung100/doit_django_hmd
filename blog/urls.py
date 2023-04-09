@@ -16,4 +16,6 @@ urlpatterns = [
 
     path('tag/<str:slug>/', views.tag_page, name='tag_filter'),
 
+    path('create_post/', views.PostCreate.as_view(), name='create_post'),
+
 ]
