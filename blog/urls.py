@@ -18,4 +18,6 @@ urlpatterns = [
 
     path('create_post/', views.PostCreate.as_view(), name='create_post'),
 
+    path('search/<str:q>/', views.PostSearch.as_view()),
+
 ]

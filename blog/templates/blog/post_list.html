@@ -16,6 +16,7 @@
 
     <h1 class="my-4">
         Blog
+        {% if search_info %}<small class="text-muted">{{ search_info }}</small>{% endif %}
         {% if category %}
         <span class="badge badge-secondary">{{ category }}</span>
         {% endif %}
