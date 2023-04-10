@@ -34,7 +34,8 @@
         {% endif %}
         <hr />
         <!-- Post content-->
-        <p class="lead">{{ post.content }}</p>
+        <!-- safe : html 태그노출을 방지하는 기능 -->
+        <p class="lead">{{ post.content | safe }}</p>
         
 
         {% if post.tags.exists %}

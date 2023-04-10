@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Post, Category, Tag
+from .forms import PostForm
 
 # Create your views here.
 # def index(request):
@@ -18,7 +19,10 @@ from .models import Post, Category, Tag
 
 class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Post
-    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']
+    # fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']
+    form_class = PostForm
+    # template_name 생략가능하다(이름을 이렇게 줬기때문에 내부적으로 알아서 읽음)
+    template_name = 'blog/post_form.html'
 
     def test_func(self):
         return self.request.user.is_superuser or self.request.user.is_staff
