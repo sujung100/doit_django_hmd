@@ -44,7 +44,7 @@
                 {% if p.hook_text %}
                     <h6 class="text-muted">{{ p.hook_text }}</h6>
                 {% endif %}
-                <p class="card-text">{{ p.content| truncatewords:45 | safe }}</p>
+                <p class="card-text">{{ p.content| truncatewords_html:45 | safe }}</p>
 
                 {% if p.tags.exists %}
                     <i class="bi bi-tags-fill"></i>
@@ -80,22 +80,22 @@
 
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
         </ul>
-      </nav>
+    </nav>
 </div>
-{% include 'side_widget.html' %}
+{% include 'blog/side_widget.html' %}
 </div>
 {% endblock %}
