@@ -22,4 +22,6 @@ urlpatterns = [
 
     # /blog/update_post/페이지
     path('update_post/<int:pk>/', views.PostUpdate.as_view(), name='update_post'),
+
+    path('<int:pk>/new_comment/', views.new_comment),
 ]

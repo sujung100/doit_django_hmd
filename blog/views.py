@@ -4,8 +4,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.utils.text import slugify
+from django.shortcuts import get_object_or_404
 from .models import Post, Category, Tag
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 
 # Create your views here.
 # def index(request):
@@ -70,6 +71,7 @@ class PostDetail(DetailView):
         context['categories'] = Category.objects.all()
         # Post 테이블에서  category 필드를 선택안한 포스트의 갯수
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
+        context['comment_form'] = CommentForm
         return context
 
 
@@ -221,5 +223,24 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and request.user == self.get_object().author:
             return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
+        
+
+# 로그인한상태로 댓글쓰기허용
+def new_comment(request, pk):
+    if request.user.is_authenticated:
+        post = get_object_or_404(Post, pk=pk)
+
+        if request.method == 'POST':
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                comment.post = post
+                comment.author = request.user
+                comment.save()
+                return redirect(comment.get_absolute_url())
+            else:
+                return redirect(post.get_absolute_url())
         else:
             raise PermissionDenied
