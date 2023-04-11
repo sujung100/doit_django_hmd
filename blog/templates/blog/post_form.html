@@ -13,6 +13,11 @@
             <form method="post" enctype="multipart/form-data">{% csrf_token %}
                 <table>
                     {{ form }}
+                    <!-- 템플릿파일에 input추가(태그 입력란) -->
+                    <tr>
+                        <th><label for="id_tags_str">Tags:</label></th>
+                        <td><input type="text" name="tags_str" id="id_tags_str"></td>
+                    </tr>
                 </table>
                 <button type="submit" class="btn btn-primary float-right">Submit</button>
             </form>

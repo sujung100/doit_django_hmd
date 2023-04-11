@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
+from django.utils.text import slugify
 from .models import Post, Category, Tag
 from .forms import PostForm
 
@@ -34,7 +35,29 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         current_user = self.request.user
         if current_user.is_authenticated and (current_user.is_staff or current_user.is_superuser):
             form.instance.author = current_user
-            return super(PostCreate, self).form_valid(form)
+            # input 요소에 입력된 값을 가져오기 위한 기능추가(tag)
+            response = super(PostCreate, self).form_valid(form)
+        
+            tags_str = self.request.POST.get('tags_str')
+            # tag_str로 받은 값의 쉼표를 세미콜론으로 모두 변경하고, 세미콜론으로 split 해서 리스트형태로 tags_list에 담는다
+            if tags_str:
+                tags_str = tags_str.strip()
+
+                tags_str = tags_str.replace(',', ';')
+                tags_list = tags_str.split(';')
+
+                # tags_list의 문자열형태의 리스트 -> Tag모델의 인스턴스로 변환
+                for t in tags_list:
+                    # 앞뒤 공백 제거
+                    t = t.strip()
+                    tag, is_tag_created = Tag.objects.get_or_create(name=t)
+                    # slug 값 생성
+                    if is_tag_created:
+                        tag.slug = slugify(t, allow_unicode=True)
+                        tag.save()
+                    self.object.tags.add(tag)
+
+            return response
         else:
             return redirect('/blog/')
 
