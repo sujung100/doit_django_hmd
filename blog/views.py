@@ -17,6 +17,7 @@ from .forms import PostForm
 #         }
 #     )
 
+# superuser 또는 staff만 포스트를 작성할 수 있게 만들기
 class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Post
     # fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']
@@ -24,9 +25,10 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     # template_name 생략가능하다(이름을 이렇게 줬기때문에 내부적으로 알아서 읽음)
     template_name = 'blog/post_form.html'
 
+    # 페이지 접근 권한을 부여한다(superuser 또는 staff)
     def test_func(self):
         return self.request.user.is_superuser or self.request.user.is_staff
-
+    # 로그인한 사용자가 superuser 또는 staff일때, 동작하게하기
     def form_valid(self, form):
         current_user = self.request.user
         if current_user.is_authenticated and (current_user.is_staff or current_user.is_superuser):
