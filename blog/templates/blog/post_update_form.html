@@ -16,7 +16,8 @@
                     <!-- 템플릿파일에 input추가(태그 입력란) -->
                     <tr>
                         <th><label for="id_tags_str">Tags:</label></th>
-                        <td><input type="text" name="tags_str" id="id_tags_str"></td>
+                        <!-- 기존 태그가 자동으로 입력되게 -->
+                        <td><input type="text" name="tags_str" id="id_tags_str" value="{{ tags_str_default }}"></td>
                     </tr>
                 </table>
                 <button type="submit" class="btn btn-primary float-right">Submit</button>
