@@ -53,6 +53,10 @@ INSTALLED_APPS = [
     # kakao id login
     'allauth.socialaccount.providers.kakao',
 
+    # crispy_form
+    'crispy_forms',
+    'crispy_bootstrap4',
+
 ]
 
 MIDDLEWARE = [
@@ -139,6 +143,8 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 
 # Default primary key field type
