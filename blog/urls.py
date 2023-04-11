@@ -20,4 +20,6 @@ urlpatterns = [
 
     path('search/<str:q>/', views.PostSearch.as_view()),
 
+    # /blog/update_post/페이지
+    path('update_post/<int:pk>/', views.PostUpdate.as_view(), name='update_post'),
 ]
