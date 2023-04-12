@@ -46,12 +46,22 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
                 tags_str = tags_str.replace(',', ';')
                 tags_list = tags_str.split(';')
+                # 마지막태그에 ;추가시 자동 공백생성오류를 해결하기위한 print()문
+                # print(tags_list)
+                # ['tag1', 'tag2', '']
 
                 # tags_list의 문자열형태의 리스트 -> Tag모델의 인스턴스로 변환
                 for t in tags_list:
                     # 앞뒤 공백 제거
                     t = t.strip()
+                    # print(t)
+
+                    # tag가 공백일때는 pass(for문 첫문장으로 이동해서 다음 요소로 수행)
+                    if t == "":
+                        continue
                     tag, is_tag_created = Tag.objects.get_or_create(name=t)
+                    # print(f'tag, is_tag_created : {tag}, {is_tag_created}')
+
                     # slug 값 생성
                     if is_tag_created:
                         tag.slug = slugify(t, allow_unicode=True)
@@ -212,6 +222,8 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
 
             for t in tags_list:
                 t = t.strip()
+                if t == "":
+                    continue
                 tag, is_tag_created = Tag.objects.get_or_create(name=t)
                 if is_tag_created:
                     tag.slug = slugify(t, allow_unicode=True)
