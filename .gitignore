@@ -129,6 +129,7 @@ dmypy.json
 
 # add mine
 doit_venv/
+datas/
 
 # Pycharm
 migrations/

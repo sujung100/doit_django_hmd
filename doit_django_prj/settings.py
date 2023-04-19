@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'blog',
     'single_pages',
+    'food_sales',
     'django_summernote',
 
     # all-auth lib 설정
