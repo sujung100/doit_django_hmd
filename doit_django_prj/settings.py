@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+import pymysql
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -96,10 +98,33 @@ WSGI_APPLICATION = 'doit_django_prj.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# SQL Lite설정
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# MySQL설정
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 엔진
+        'ENGINE': 'django.db.backends.mysql',
+        # db이름
+        'NAME': 'django_pjt_db',
+        # 계정
+        'USER': 'admin',
+        # 패스워드
+        'PASSWORD' : 'Gmrbsc00!!',
+        # 호스트ip 또는 도메인 이름
+        'HOST' : 'mysql-database-1.cefuljz5kxwm.ap-northeast-2.rds.amazonaws.com',
+        # TCP포트
+        'PORT' : '3306',
+        # 기본 옵션
+        'OPTIONS':{
+            'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 }
 
